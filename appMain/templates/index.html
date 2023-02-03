@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test app site</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/master.css' %}">
+    <link rel="stylesheet" href="{% static 'https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css' %}" >
+    <link rel="stylesheet" href="{% static 'css/docs_min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap_min.css' %}">
+    <style>
+        body{
+            background-color: #e5e4e4;
+        }
+        .containerr{
+            width: 1200px;
+            margin: 20px auto;
+        }
+        .containerr .backHomeImage{
+            margin-top: 20px;
+        }
+        .containerr .text_center{
+            position: absolute;
+            top: 50%;
+            left: 54%;
+            transform: translate(-50% , -50%);
+            color: white;
+            font-size: 60px;
+            font-stretch: expanded;
+            font-family: cursive;
+            text-align: center;
+        }
+        .containerr img{
+            filter: brightness(0.5);
+        }
+        .cards{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin: 40px;
+            
+        }
+        .cards a{
+            color: black;
+        }
+        #sigin-tab{
+            margin-left: 800px;
+        }
+        .nav {
+            background-color: #ec407a;
+;
+            
+        }
+        .nav-link{
+            color: white;
+            font-size: 18px;
+        }
+        #send_request{
+            background-color: #ec407a;
+            color: white;
+        }
+        #send_request:hover{
+            box-shadow: 4px 4px 4px;
+            font-size: 18px;
+        }
+    
+    </style>
+</head>
+<body>
+    
+    <div class="containerr">
+        <!-- navbar -->
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+            <a class="nav-link active" id="home-tab" data-toggle="tab" href="/" role="tab" aria-controls="home" aria-selected="true"><b>Theripst</b></a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" id="profile-tab" data-toggle="tab" href="/" role="tab" aria-controls="profile" aria-selected="false">Home</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="sigin-tab" data-toggle="tab" href="/login_page" role="tab" aria-controls="contact" aria-selected="false">Sign in</a>
+            </li>
+            
+        </ul>
+        <div class="backHomeImage">
+            <img src="{% static 'image/d-1.jpg'%}" class="img-fluid" alt="Responsive image" >
+            <div class="text_center">
+                <b>Welcome Therapist Request site </b>
+            </div>
+        </div>
+        <div class="cards">
+        {% for therapist in therapists %}
+            <div class="card text-white bg-info mb-3" style="width: 18rem;">
+                <div class="card-header">{{therapist.first_name}} {{therapist.last_name}}</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{therapist.treatment_field}}</h5>
+                    {{therapist.desc}}<br><br>
+                    <a class="btn btn-primary" id="send_request" href="/send_user_request/{{therapist.id}}">Send Requet</a>
+                </div>
+            </div>
+        {% endfor %}
+
+        </div>
+    </div>
+</body>
+</html>

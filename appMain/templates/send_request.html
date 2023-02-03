@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registeration in test app</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/master.css' %}">
+    <link rel="stylesheet" href="{% static 'https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css' %}" >
+    <link rel="stylesheet" href="{% static 'css/docs_min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap_min.css' %}">
+    <style>
+        .register_container{
+            width:1000px;
+            margin:70px 300px;
+        }
+        .register_container .actions{
+            display: flex;
+            justify-content: space-between;
+        }
+        .register_container h1{
+            margin: 20px;
+        }
+        .error_message{
+            color: red;
+        }
+        .top_users{
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="register_container">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+            <a class="nav-link active" id="home-tab" data-toggle="tab" href="/" role="tab" aria-controls="home" aria-selected="true"><b>Therapist</b></a>
+            </li>
+        </ul><br><br>
+        <div class="top_users">
+            <h3>Add request</h3>
+            <form action="/login_page" method="post">
+                {% csrf_token %}
+                <input type="submit" value="Sign in" class="btn btn-primary">
+            </form>
+        </div><br>
+        <form action="/send_visitor_request" method="post">
+            {% csrf_token %}
+            <fieldset>
+                <div class="form-group">
+                    <label for="disabledTextInput">Full Name</label>
+                    <input type="text" name="full_name"  id="disabledInput"  class="form-control" placeholder="full_name">
+                </div>
+                {% for message in messages %}
+                        {% if message.extra_tags == 'full_name' %}
+                            <p class="error_message">* {{message}}</p>
+                        {% endif %}
+                {% endfor %}
+                <div class="form-group">
+                    <label for="disabledTextInput">Age</label>
+                    <input type="text" name="age"  class="form-control" placeholder="age">
+                </div>
+                {% for message in messages %}
+                        {% if message.extra_tags == 'age' %}
+                            <p class="error_message">* {{message}}</p>
+                        {% endif %}
+                {% endfor %}
+                <div class="form-group">
+                    <label for="disabledTextInput">Identity Number</label>
+                    <input type="text" name="identity_number"  class="form-control" placeholder="Identity Number">
+                </div>
+                {% for message in messages %}
+                        {% if message.extra_tags == 'identity_number' %}
+                            <p class="error_message">* {{message}}</p>
+                        {% endif %}
+                {% endfor %}
+                <div class="form-group">
+                    <label for="disabledTextInput">Phone Number</label>
+                    <input type="text" name="phone_number"  class="form-control" placeholder="Phone Number">
+                </div>
+                {% for message in messages %}
+                        {% if message.extra_tags == 'phone_number' %}
+                            <p class="error_message">* {{message}}</p>
+                        {% endif %}
+                {% endfor %}
+                <div class="form-group">
+                    <label for="disabledTextInput">Telphone Number</label>
+                    <input type="text" name="telphone_number"  class="form-control" placeholder="Telphone Number">
+                </div>
+                {% for message in messages %}
+                        {% if message.extra_tags == 'telphone_number' %}
+                            <p class="error_message">* {{message}}</p>
+                        {% endif %}
+                {% endfor %}
+                <div class="form-group">
+                    <label for="disabledTextInput">email</label>
+                    <input type="text" name="email"  class="form-control" placeholder="email">
+                </div>
+                {% for message in messages %}
+                        {% if message.extra_tags == 'email' %}
+                            <p class="error_message">* {{message}}</p>
+                        {% endif %}
+                {% endfor %}
+                <div class="form-group">
+                    <label for="disabledTextInput">State</label>
+                    <input type="text" name="state"  class="form-control" placeholder="state">
+                </div>
+                {% for message in messages %}
+                        {% if message.extra_tags == 'state' %}
+                            <p class="error_message">* {{message}}</p>
+                        {% endif %}
+                {% endfor %}
+                <div class="form-group">
+                    <label for="disabledTextInput">Street</label>
+                    <input type="text" name="street"  class="form-control" placeholder="street">
+                </div>
+                {% for message in messages %}
+                        {% if message.extra_tags == 'street' %}
+                            <p class="error_message">* {{message}}</p>
+                        {% endif %}
+                {% endfor %}
+                <div class="form-group">
+                    <label for="disabledTextInput">Service Description</label>
+                    <textarea name="service_desc"  class="form-control" placeholder="Service Description"></textarea>
+                </div>
+                {% for message in messages %}
+                        {% if message.extra_tags == 'service_desc' %}
+                            <p class="error_message">* {{message}}</p>
+                        {% endif %}
+                {% endfor %}
+                <div class="form-group">
+                    <label for="disabledTextInput">Therapist</label>
+                    <select name="therapist" class="form-control">
+                        <option>{{therapist.treatment_field}}</option>
+                        {% for therapist in therapists %}
+                            <option>{{therapist.treatment_field}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <input type="hidden" name="therapist_id" value="{{therapist.id}}">
+                {% for message in messages %}
+                        {% if message.extra_tags == 'therapist' %}
+                            <p class="error_message">* {{message}}</p>
+                        {% endif %}
+                {% endfor %}
+                <br>
+                <button type="submit" class="btn btn-success">Send</button>
+            </fieldset>
+        </form>
+       
+    </div>
+</body>
+</html>

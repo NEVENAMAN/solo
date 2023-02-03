@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dashboard</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/master.css' %}">
+    <link rel="stylesheet" href="{% static 'https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css' %}" >
+    <link rel="stylesheet" href="{% static 'css/docs_min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap_min.css' %}">
+    <style>
+        body{
+            background-color: #f2f3f8;
+        }
+        .dashboard_container{
+            display: flex;
+        }
+        .dashboard_container .left_content{
+            flex:1;
+            background-color: #040b14;
+            color:white;
+            padding:10px 0px;
+            height: 840px;
+            position: fixed;
+        }
+        .left_content h1{
+            text-align: center;
+            margin: 20px;
+        }
+        .left_content span{
+            color: blue;
+            font-size: 50px;
+            position: relative;
+            top: 1px;
+        }
+        .left_content ul{
+            list-style: none;
+            margin-left: -27px;
+        }
+        .left_content li{
+            padding: 10px 5px 10px 0px;
+            margin-top: 5px;
+            transition: 0.7s;
+        }
+        .left_content li:not(:last-child){
+            border-bottom: 1px solid #2a2e40;
+        }
+        .left_content li:hover{
+            background-color: #2a2e40;
+            padding-left: 40px;
+            color: black;
+        }
+
+        .left_content a{
+            color: white;
+        }
+        .left_content a:hover{
+            text-decoration: none;
+        }
+        /* style right content of dashboard */
+        .dashboard_container .right_content{
+            flex:5;
+            background-color: #f2f3f8;
+            margin-left: 247px;
+            height: 100vh;
+        }
+        .right_content .content{
+            /* margin: 100px ; */
+            padding:-6px;
+            background-color: white;
+        }
+        .right_content .head{
+            display: flex;
+            padding-top: 10px;
+            padding-right: 10px;
+            margin-left: 1200px;
+            justify-content: space-between;
+            background-color: white;
+            width:200px;
+            /* margin-left: 700px; */
+        }
+        .right_content .head h5{
+            position: relative;
+            top: 7px;
+            color: #9ea1a4;
+        } 
+        .right_content .profile{
+           
+            width: 800px;
+            background-color: white;
+            margin: 0px 50px;
+            padding: 30px 10px;
+            border: 1px;
+            border-radius: 10px;
+        }
+        .right_content img{
+            width: 200px;
+            height: 200px;
+            border: 1px;
+            border-radius: 10px;
+            margin-left: -130px;
+        }
+        .right_content .profile h4{
+            text-transform: capitalize;
+            position:relative;
+            right: 124px;
+        }
+        .right_content .profile .content img{
+            width: 24px;
+            margin-bottom: 10px;
+            height: 24px;
+            margin-right: 12px;
+            margin-top: 6px;
+        }
+        .error_message{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard_container">
+        <div class="left_content">
+            <h1><span>D</span>ashboard</h1>
+            <ul>
+                <li><a href="/dashboard_page">Your Profile</a></li>
+                <li><a href="/members_page">Members</a></li>
+                <li><a href="/requests_page">Requests</a></li>
+                <li><a href="/add_member_page">Add member</a></li>
+                <li><a href="/add_request_page">Add Request</a></li>
+                <li><a href="/messages_page/{{admin.id}}">Messages</a></li>
+                <li><a href="/send_message_page">Send Message</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </div>
+        <div class="right_content">
+            <div class="content">
+                <div class="head">
+                    <h5>Hi {{admin.first_name}}</h5>
+                    <form action="/edit_profile_by_admin/{{admin.id}}" method="post">
+                        {% csrf_token %}
+                        <input type="submit" value="Edit" class="btn btn-primary">
+                    </form>
+                </div>
+                <hr>
+            </div>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                <a class="nav-link active" id="home-tab" data-toggle="tab" href="/dashboard_page" role="tab" aria-controls="home" aria-selected="true"><b>{{user.user_level}}</b></a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Home</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" id="contact-tab" data-toggle="tab" href="/edit_login_page/{{user.id}}" role="tab" aria-controls="contact" aria-selected="false">Login information</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="sigin-tab" data-toggle="tab" href="/edit_profile_by_admin/{{user.id}}" role="tab" aria-controls="contact" aria-selected="false">Profile</a>
+                </li>
+            </ul><br><br>
+            <div class="profile">
+                    Edit Profile
+                    <hr>
+                    <form action="/edit_method_by_admin/{{user.id}}" method="post">
+                        {% csrf_token %}
+                        <fieldset>
+                            <div class="form-group">
+                                <label for="disabledTextInput">First Name</label>
+                                <input type="text" name="first_name"  id="disabledInput" value="{{user.first_name}}" class="form-control" placeholder="First Name">
+                            </div>
+                            {% for message in messages %}
+                                    {% if message.extra_tags == 'first_name' %}
+                                        <p class="error_message">* {{message}}</p>
+                                    {% endif %}
+                            {% endfor %}
+                            <div class="form-group">
+                                <label for="disabledTextInput">Last Name</label>
+                                <input type="text" name="last_name" value="{{user.last_name}}" class="form-control" placeholder="Last Name">
+                            </div>
+                            {% for message in messages %}
+                                    {% if message.extra_tags == 'last_name' %}
+                                        <p class="error_message">* {{message}}</p>
+                                    {% endif %}
+                            {% endfor %}
+                            <div class="form-group">
+                                <label for="disabledTextInput">Email</label>
+                                <input type="text" name="email" value="{{user.email}}" class="form-control" placeholder="email">
+                            </div>
+                            {% for message in messages %}
+                                    {% if message.extra_tags == 'email' %}
+                                        <p class="error_message">* {{message}}</p>
+                                    {% endif %}
+                            {% endfor %}
+                            <div class="form-group">
+                                <label for="disabledTextInput">Identity Number</label>
+                                <input type="text" name="identity_number" value="{{user.number}}" class="form-control" placeholder="email">
+                            </div>
+                            <div class="form-group">
+                                <label for="disabledTextInput">Treatment field</label>
+                                <input type="text" name="treatment_field" value="{{user.treatment_field}}" class="form-control" placeholder="email">
+                            </div>
+                            <div class="form-group">
+                                <label for="disabledTextInput">Years of Experience</label>
+                                <input type="text" name="years_of_experience" value="{{user.years_of_experience}}" class="form-control" placeholder="email">
+                            </div>
+                            <div class="form-group">
+                                <label for="disabledTextInput">Description</label>
+                                <textarea name="desc" value="{{user.desc}}" class="form-control" placeholder="{{user.desc}}"></textarea>
+                            </div>
+                            {% for message in messages %}
+                                    {% if message.extra_tags == 'desc' %}
+                                        <p class="error_message">* {{message}}</p>
+                                    {% endif %}
+                            {% endfor %}
+                            <div class="form-group">
+                                <label for="disabledTextInput">User level</label>
+                                <select name="user_level" class="form-control" value="{{user.user_level}}">
+                                    <option></option>
+                                    <option>admin</option>
+                                    <option>proccser</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="disabledTextInput">Specialization certificate</label>
+                                <input type="file" name="certificate" value="{{user.certificate}}" class="form-control" placeholder="email">
+                            </div>
+                            <div class="form-group">
+                                <label for="disabledTextInput">Photograph</label>
+                                <input type="file" name="photograph" value="{{user.photograph}}" class="form-control" placeholder="email">
+                            </div>
+                            <br>
+                            <button type="submit" class="btn btn-success">Update</button>
+                        </fieldset>
+                    </form>                    
+
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
