@@ -106,6 +106,18 @@ class UserManager(models.Manager):
         if len(postData['send_to']) < 3 :
             error['send_to'] = " should select reciever "
         return error
+    
+    def product_validator(self, postData):
+        error = {}
+        if len(postData['product_name']) < 3 :
+            error['product_name'] = "product name should be at least 3 characters"
+        if len(postData['product_number']) < 4 :
+            error['product_number'] = "product number should be  4 characters/ numbers"
+        if len(postData['product_desc']) < 3 :
+            error['product_desc'] = "product description should be at least 3 characters"
+        if len(postData['product_price']) < 1 :
+            error['product_price'] = "product price should be at least 1 number"
+        return error
 
 
 class User(models.Model):
@@ -116,8 +128,8 @@ class User(models.Model):
     treatment_field = models.TextField(default=None)
     years_of_experience = models.CharField(max_length=255,default='')
     desc = models.TextField(default=None)
-    certificate = models.FileField(upload_to="certificates/", max_length=250,null=True,default='')
-    photograph = models.FileField(upload_to="photographs/", max_length=250,null=True,default='')
+    certificate = models.FileField(upload_to="certificates/", max_length=250,null=True,blank=True,default='')
+    photograph = models.FileField(upload_to="doctors_image/", max_length=250,null=True,blank=True,default='')
     password = models.CharField(max_length=255)
     user_level = models.CharField(max_length = 255, default='proccser')
     address = models.CharField(max_length=255,default='')
@@ -150,6 +162,26 @@ class Message(models.Model):
     created_at=models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)
     objects = UserManager()
+
+class Products(models.Model):
+    product_name = models.TextField()
+    product_image = models.FileField(upload_to="products_image/", max_length=250,null=True,blank=True,default='')
+    product_number = models.TextField()
+    product_desc = models.TextField()
+    product_price = models.TextField()
+    created_at=models.DateTimeField(auto_now_add=True)
+    update_at = models.DateTimeField(auto_now=True)
+    objects = UserManager()
+
+# add product to the database
+def add_product_data(data , files):
+        product_name = data['product_name']
+        product_number = data['product_number']
+        product_desc = data['product_desc']
+        product_price = data['product_price']
+        product_image = files['product_image']
+        Products.objects.create(product_name=product_name,product_number=product_number,product_desc=product_desc,product_price=product_price,product_image=product_image)
+
 
 # register new user
 def Register(request):

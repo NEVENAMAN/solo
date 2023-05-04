@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>our doctors</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/master.css' %}">
+    <link rel="stylesheet" href="{% static 'https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css' %}" >
+    <link rel="stylesheet" href="{% static 'css/docs_min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap_min.css' %}">
+    <style>
+         @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
+
+/* body{
+    background-color: #e5e4e4;
+} */
+.containerr{
+    width: 1200px;
+    margin: 20px auto;
+}
+.containerr .backHomeImage{
+    margin-top: 200px;
+}
+.containerr .contact_us{
+    position: absolute;
+    top: 60%;
+    left: 60%;
+    transform: translate(-50% , -50%);
+    color: black;
+    text-align: right;
+    line-height: 2;
+    /* font-size: 60px; */
+    /* font-stretch: expanded;
+    font-family: cursive;
+    text-align: center; */
+}
+
+.contact_us {
+        flex-direction: column;
+    }
+
+    .contact_us .secand_head {
+        position: relative;
+        color: #a843b7;
+        /* top: -352px; */
+    }
+
+    .contact_us h1 {
+        position: relative;
+        /* top: -352px; */
+    }
+
+    .contact_us img {
+        margin-bottom: 40px;
+        width: 100%;
+        position: relative;
+        top: 170px;
+    }
+
+    .contianer p {
+        width: auto;
+    }
+/* .containerr #img-filter{
+    filter: brightness(0.5);
+} */
+/* --------------------start style header */
+.header_doctors {
+    position: fixed;
+    box-shadow: 0px 0px 10px -2px #ddd;
+    background-color: #FFFFFF;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    margin-top: -48px;
+    z-index: 1;
+    width: 100%;
+}
+.head_nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width:1200px;
+    margin-left: 200px;
+    padding: 20px 0px;
+    --tw-text-opacity: 1;
+    color: rgb(0 87 165 / var(--tw-text-opacity));
+}
+.head_nav #logo{
+    width: 100px;
+    height: auto;
+}
+.head_nav ul {
+    position: relative;
+    list-style: none;
+    display: flex;
+    margin-top: 0px;
+    top: 16px;
+    margin-left: 400px;
+}
+
+.head_nav li {
+    margin-right: 20px;
+    font-size: larger;
+    font-family: system-ui;
+}
+
+.head_nav a {
+    color: #0057Af;
+}
+
+.whatsapp {
+    background-color: #a843b7;
+    padding: 10px 25px;
+    border-radius: 30px;
+    color: white;
+    font-weight: 700;
+    height: 50px;
+    width: 163px;
+    border: none;
+    transition-duration: 0.4s;
+}
+
+.whatsapp:hover {
+    background-color: #1777de;
+}
+
+.whatsapp:visited {
+    background-color: #1777de;
+}
+
+.whatsapp a {
+    color: white;
+}
+
+.whatsapp img {
+    width: 26px;
+    margin-left: 5px;
+}
+/* -----------------------------end style header */
+.cards{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: 40px;
+    position: relative;
+    top:200px;
+    
+}
+.cards a{
+    color: black;
+}
+#sigin-tab{
+    margin-left: 800px;
+}
+.nav {
+    background-color: #ec407a;
+;
+    
+}
+.nav-link{
+    color: white;
+    font-size: 18px;
+}
+#send_request{
+    background-color: #ec407a;
+    color: white;
+}
+#send_request:hover{
+    box-shadow: 4px 4px 4px;
+    font-size: 18px;
+}
+/* --------------------------start service section */
+.our_services {
+    text-align: center;
+}
+
+.our_services h1 {
+    color: #0057A5;
+}
+
+.our_services .servies {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.our_services .card {
+    box-shadow: 4px 4px 4px 2px #d1cfcf;
+    margin: 20px 10px;
+}
+
+.our_services h1 {
+    margin-bottom: 100px;
+    margin-top: 100px;
+}
+
+.our_services img {
+    width: 70px;
+    margin-top: 20px;
+}
+
+.our_services h2 {
+    color: #0056af;
+    font-family: sans-serif;
+    font-size: 30px;
+    margin-top: 20px;
+}
+/* start medical section */
+.video{
+    margin-left:-50px;
+}
+.video .cards {
+    display: flex;
+    justify-content: space-between;
+    text-align: right;
+    margin-bottom: 200px;
+    margin-top: 70px;
+    position: relative;
+    top: 80px;
+    align-items: center;
+    width: 1200px;
+}
+.video img{
+    width:500px;
+}
+
+.video .content {
+    width: min-content;
+}
+
+.video p {
+    font-family: system-ui;
+    line-break: auto;
+    width: 544px;
+    color: #0057A5;
+    opacity: 0.8;
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    font-weight: inherit;
+}
+
+.video h1 {
+    color: #0057A5;
+}
+/* end medical section */
+/* style footer */
+footer {
+    background-color: #a843b7;
+    height: 408px;
+
+}
+
+.footer_content {
+    width: 1200px;
+    margin: auto;
+    text-align: center;
+    color: white;
+    padding: 96px 32px 0px;
+}
+
+.footer_content p {
+    font-family: system-ui;
+    font-size: 20px;
+    line-height: 1.8;
+    line-break: auto;
+
+}
+
+.footer_content span {
+    color: #ffe851;
+}
+
+.footer_content .social_icon {
+    display: flex;
+    justify-content: center;
+}
+
+.social_icon img {
+    width: 40px;
+    margin-right: 10px;
+}
+#send_button{
+    color: white;
+}
+
+    </style>
+</head>
+<body>
+    <div class="header_doctors">
+        <div class="head_nav">
+            <form action="/login_page">
+                <button type="submit" class="whatsapp" >تسجيل الدخول</button>
+            </form>
+            <nav>
+                <ul>
+                    <li><a href="https://api.whatsapp.com/send?phone=970+970%20595%20213%20498&text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%20..%20%D9%83%D9%8A%D9%81%20%D8%A7%D9%84%D8%AD%D8%A7%D9%84%20%D8%9F" target="_blank">تواصل معنا</a></li>
+                    <li><a href="doctors_page">الأطباء</a></li>
+                    <li><a href="/#vied">منتجاتنا</a></li>
+                    <li><a href="/#service">خدماتنا</a></li>
+                    <li><a href="/#foot">من نحن</a></li>
+                </ul>
+            </nav>
+            <a href="/"><img src="{% static 'image/logo.png' %}" height="62px" alt="logo of company" id="logo"></a>
+        </div>
+    </div>
+        
+    <div class="containerr">
+       products
+    </div>
+</body>
+</html>

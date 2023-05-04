@@ -18,6 +18,44 @@ def welcome_page(request):
         "visitor" : visitor,
     }
     return render(request,'welcome_page.html',context)
+
+# doctors page
+def doctors_page(request):
+    therapists = get_all_therapist(request)
+    for i in therapists:
+        print(i.first_name)
+        context = {
+            "therapists" : therapists,
+        }
+    return render(request, 'doctors.html' ,context)
+
+# products page
+def products_page(request):
+    return render(request,'products.html')
+
+# add product page
+def add_product_page(request):
+    if 'userid' in request.session:
+        admin = User.objects.get(id=request.session['userid'])
+        context = {
+            "admin":admin,
+        }
+        return render(request,'add_product.html',context)
+    else:
+        return redirect('/login_page')
+
+# add product method
+def add_product_method(request):
+    error = Products.objects.product_validator(request.POST)
+    if len(error) >0:
+        for key, value in error.items():
+            messages.error(request, value, extra_tags=key)
+        return redirect('/add_product_page')
+    else:
+        if request.method == "POST":
+            add_product_data(request.POST, request.FILES)
+        return redirect('/dashboard_page')
+    
 # register method
 def register(request):
     print("***** 1 ")

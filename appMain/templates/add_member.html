@@ -140,6 +140,7 @@
                 <li><a href="/requests_page">Requests</a></li>
                 <li><a href="/add_member_page">Add member</a></li>
                 <li><a href="/add_request_page">Add Request</a></li>
+                <li><a href="/add_product_page">Add Product</a></li>
                 <li><a href="/messages_page/{{admin.id}}">Messages</a></li>
                 <li><a href="/send_message_page">Send Message</a></li>
                 <li><a href="/logout">Logout</a></li>
@@ -205,7 +206,7 @@
                         {% endfor %}
                         <div class="form-group">
                             <label for="disabledTextInput">Phone Number</label>
-                            <input type="text" name="identity_number"  class="form-control" placeholder="email">
+                            <input type="text" name="identity_number"  class="form-control" placeholder="phone number">
                         </div>
                         {% for message in messages %}
                                 {% if message.extra_tags == 'identity_number' %}
@@ -214,7 +215,7 @@
                         {% endfor %}
                         <div class="form-group">
                             <label for="disabledTextInput">Treatment field</label>
-                            <input type="text" name="treatment_field"  class="form-control" placeholder="email">
+                            <input type="text" name="treatment_field"  class="form-control" placeholder="treatment field">
                         </div>
                         {% for message in messages %}
                                 {% if message.extra_tags == 'treatment_field' %}
@@ -223,7 +224,7 @@
                         {% endfor %}
                         <div class="form-group">
                             <label for="disabledTextInput">Years of Experience</label>
-                            <input type="text" name="years_of_experience"  class="form-control" placeholder="email">
+                            <input type="text" name="years_of_experience"  class="form-control" placeholder="years of experience">
                         </div>
                         {% for message in messages %}
                                 {% if message.extra_tags == 'years_of_experience' %}
@@ -286,7 +287,7 @@
                             <input type="file" name="photograph"  class="form-control" placeholder="email">
                         </div>
                         <br>
-                        <button type="submit" class="btn btn-success">Update</button>
+                        <button type="submit" class="btn btn-success">Add</button>
                     </fieldset>
                 </form>
         </div>
