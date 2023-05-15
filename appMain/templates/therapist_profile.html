@@ -159,7 +159,7 @@
             <div class="profile">
                     Edit Profile
                     <hr>
-                    <form action="/edit_method_by_admin/{{user.id}}" method="post">
+                    <form action="/edit_method_by_therapist/{{therapist.id}}" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         <fieldset>
                             <div class="form-group">
@@ -213,7 +213,7 @@
                             <div class="form-group">
                                 <label for="disabledTextInput">User level</label>
                                 <select name="user_level" class="form-control" value="{{therapist.user_level}}">
-                                    <option></option>
+                                    <option>{{therapist.user_level}}</option>
                                     <option>admin</option>
                                     <option>proccser</option>
                                 </select>

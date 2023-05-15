@@ -131,7 +131,7 @@
             <div class="content">
                 <div class="head">
                     <h5>Hi {{therapist.first_name}}</h5>
-                    <form action="/edit_profile_by_admin/{{admin.id}}" method="post">
+                    <form action="/edit_profile_by_admin/{{admin.id}}" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         <input type="submit" value="Edit" class="btn btn-primary">
                     </form>
@@ -153,13 +153,14 @@
                 </li>
             </ul><br><br>
             <div class="profile">
-                <img src="{% static 'image/side-view-happy-woman-with-crossed-arms.jpg' %}" width="50px">
+                <img class="card-img-top" src="media/{{therapist.photograph}}" alt="user image" width="50px">
                 <div class="content">
                     <h4>{{therapist.first_name}} {{therapist.last_name}} . {{therapist.user_level}}</h4>
                     <img src="{% static 'image/email.png' %}"> {{therapist.email}}<br>
                     <img src="{% static 'image/number.png' %}"> {{therapist.number}}<br>
                     <img src="{% static 'image/desc.png' %}"> {{therapist.treatment_field}}<br>
                     <img src="{% static 'image/profil.png' %}"> {{therapist.desc}}<br>
+                    <img src="media/{{therapist.photograph}}" width="30px">
                 </div>
             </div>
         </div>

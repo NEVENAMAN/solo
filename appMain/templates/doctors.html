@@ -87,7 +87,7 @@
     color: rgb(0 87 165 / var(--tw-text-opacity));
 }
 .head_nav #logo{
-    width: 100px;
+    width: 113px;
     height: auto;
 }
 .head_nav ul {
@@ -302,7 +302,7 @@ footer {
                     <li><a href="/#foot">من نحن</a></li>
                 </ul>
             </nav>
-            <a href="/"><img src="{% static 'image/logo.png' %}" height="62px" alt="logo of company" id="logo"></a>
+            <a href="/"><img src="{% static 'image/logg (2).jpeg' %}" height="62px" alt="logo of company" id="logo"></a>
         </div>
     </div>
         
@@ -310,8 +310,8 @@ footer {
         <div class="cards">
             {% for therapist in therapists %}
             <div class="card" style="width: 18rem;margin-bottom: 40px;">
-                <!-- <img class="card-img-top" src="media/{{therapist.photograph}}" alt="Card image cap"> -->
-                <img class="card-img-top" src="{% static 'image/d-1.jpg' %}" alt="Card image cap">
+                <img class="card-img-top" src="media/{{therapist.photograph}}" alt="Card image cap">
+                <!-- <img class="card-img-top" src="{% static 'image/d-1.jpg' %}" alt="Card image cap"> -->
                 <div class="card-body">
                   <h5 class="card-title">{{therapist.first_name}} {{therapist.last_name}}</h5>
                   <h3>{{therapist.treatment_field}}</h3>

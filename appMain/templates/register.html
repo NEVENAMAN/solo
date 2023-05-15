@@ -47,7 +47,7 @@
                 <input type="submit" value="Sign in" class="btn btn-primary">
             </form>
         </div><br>
-        <form action="/register" method="post">
+        <form action="/register" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <fieldset>
                 <div class="form-group">

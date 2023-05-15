@@ -31,7 +31,11 @@ def doctors_page(request):
 
 # products page
 def products_page(request):
-    return render(request,'products.html')
+    products = get_all_products(request)
+    context = {
+        "products" : products,
+    }
+    return render(request,'products.html',context)
 
 # add product page
 def add_product_page(request):
@@ -54,8 +58,18 @@ def add_product_method(request):
     else:
         if request.method == "POST":
             add_product_data(request.POST, request.FILES)
-        return redirect('/dashboard_page')
+        return redirect('/products_page_admin')
     
+# products_page from admin dashboard
+def products_page_admin(request):
+    admin = User.objects.get(id=request.session['userid'])
+    products = get_all_products(request)
+    context = {
+        "admin":admin,
+        "products":products,
+    }
+    return render(request, 'products_admin.html',context)
+
 # register method
 def register(request):
     print("***** 1 ")
@@ -68,7 +82,7 @@ def register(request):
     else:
         if request.method == "POST":
             print("***** 3 ")
-            Register(request)
+            Register(request.POST,request.FILES)
             print("***** 4 ")
         return redirect('/')
 
@@ -179,6 +193,29 @@ def edit_by_admin_page(request,id):
     else:
         return redirect('/login_page')
 
+# edit product data
+def edit_product(request,id):
+    if 'userid' in request.session:
+        admin = User.objects.get(id=request.session['userid'])
+        product = Products.objects.get(id=id)
+        context = {
+            "admin" : admin,
+            "product" : product,
+        }
+        return render(request,'product_edit.html',context)
+    else:
+        return redirect('/login_page')
+
+# edit_product_method
+def edit_product_method(request,id):
+    product_name = request.POST['product_name']
+    product_number = request.POST['product_number']
+    product_price = request.POST['product_price']
+    product_desc = request.POST['product_desc']
+    # product_img = request.FILES['product_img']
+    edit_product_by_admin(id,product_name,product_number,product_price,product_desc)
+    return redirect('/products_page')
+
 # edit by admin method
 def edit_method_by_admin(request,id):
     print("000")
@@ -189,13 +226,30 @@ def edit_method_by_admin(request,id):
     treatment_field = request.POST['treatment_field']
     years_of_experience = request.POST['years_of_experience']
     desc = request.POST['desc']
-    certificate = request.POST['certificate']
-    photograph = request.POST['photograph']
+    certificate = request.FILES['certificate']
+    photograph = request.FILES['photograph']
     user_level = request.POST['user_level']
     print(user_level)
     print("111")
     edit_by_admin(id,first_name,last_name,email,identity_number,treatment_field,years_of_experience,desc,certificate,photograph,user_level)
     return redirect('/members_page')
+
+# edit_method_by_therapist
+def edit_method_by_therapist(request,id):
+    first_name = request.POST['first_name']
+    last_name = request.POST['last_name']
+    email = request.POST['email']
+    identity_number = request.POST['identity_number']
+    treatment_field = request.POST['treatment_field']
+    years_of_experience = request.POST['years_of_experience']
+    desc = request.POST['desc']
+    certificate = request.FILES['certificate']
+    photograph = request.FILES['photograph']
+    user_level = request.POST['user_level']
+    print(user_level)
+    print("111")
+    edit_by_admin(id,first_name,last_name,email,identity_number,treatment_field,years_of_experience,desc,certificate,photograph,user_level)
+    return redirect('/therapist_dashboard/'+ str( id))
 
 # edit_login_page
 def edit_login_page(request,id):
@@ -250,7 +304,7 @@ def add_member_by_admin(request):
     else:
         if request.method == "POST":
             print("***** 3 ")
-            Register(request)
+            Register(request.POST,request.FILES)
             print("***** 4 ")
         return redirect('/members_page')
 
@@ -279,6 +333,7 @@ def dash_therpist(request):
         return render(request,'dash_therpist.html')
     else:
         return redirect('/login_page')
+    
 # add request page
 def add_request_page(request):
     admin = User.objects.get(id=request.session['userid'])
@@ -393,6 +448,11 @@ def delete_message(request,id):
     del_message(message)
     return redirect('/messages_page/' + str(id))
 
+# delete product
+def delete_product(request,id):
+    product = Products.objects.get(id=id)
+    del_product(product)
+    return redirect('/products_page_admin')
 
 
 # therapist dashbpard methos-----------------------------------------------------------------------
@@ -403,7 +463,9 @@ def therpist_dash(request,id):
         therapist = User.objects.get(id=id)
         context = {
             "therapist" : therapist,
+            "img_of" : therapist.photograph,
         }
+        print(therapist.photograph)
         return render(request,'dash_therapist.html',context)
     else:
         return redirect('/login_page')
@@ -458,6 +520,20 @@ def view_therapist(request,id):
     else:
         return redirect('/login_page')
 
+# view product data
+def view_product(request,id):
+    if 'userid' in request.session:
+        admin = User.objects.get(id=request.session['userid'])
+        product = Products.objects.get(id=id)
+        context = {
+            "admin" : admin,
+            "product" : product,
+        }
+
+        return render(request,'product_view.html',context)
+    else:
+        return redirect('/login_page')
+    
 # therapist profile
 def therapist_profile(request,id):
     if 'userid' in request.session:
@@ -540,6 +616,14 @@ def therapist_request_data(request,id):
     }
 
     return render(request,'therapist_request_data.html',context)
+
+# card payment page
+def card_page(request,id):
+    product = Products.objects.get(id=id)
+    context = {
+        "product" : product,
+    }
+    return render(request,'card.html',context)
 
 # logout method
 def logout(request):

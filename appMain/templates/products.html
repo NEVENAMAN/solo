@@ -87,7 +87,7 @@
     color: rgb(0 87 165 / var(--tw-text-opacity));
 }
 .head_nav #logo{
-    width: 100px;
+    width: 113px;
     height: auto;
 }
 .head_nav ul {
@@ -284,7 +284,9 @@ footer {
 #send_button{
     color: white;
 }
-
+.cards h6{
+    color: green;
+}
     </style>
 </head>
 <body>
@@ -302,12 +304,34 @@ footer {
                     <li><a href="/#foot">من نحن</a></li>
                 </ul>
             </nav>
-            <a href="/"><img src="{% static 'image/logo.png' %}" height="62px" alt="logo of company" id="logo"></a>
+            <a href="/"><img src="{% static 'image/logg (2).jpeg' %}" height="62px" alt="logo of company" id="logo"></a>
         </div>
     </div>
         
     <div class="containerr">
-       products
+        <div class="cards">
+            {% for product in products %}
+            <div class="card" style="width: 18rem;margin-bottom: 40px;">
+                <img class="card-img-top" src="media/{{product.product_image}}" alt="Card image cap">
+                <!-- <img class="card-img-top" src="{% static 'image/d-1.jpg' %}" alt="Card image cap"> -->
+                <div class="card-body">
+                  <h5 class="card-title">{{product.product_name}} {{product.product_number}}</h5>
+                  <p class="card-text">{{product.product_desc}}</p>
+                  <h6>{{product.product_price}}</h6>
+                  <a href="/card_page/{{product.id}}" class="btn btn-primary" id="send_button">تسوق</a>
+                </div>
+              </div>
+                <!-- <div class="card text-white bg-info mb-3" style="width: 18rem;">
+                    <div class="card-header">{{therapist.first_name}} {{therapist.last_name}}</div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{therapist.treatment_field}}</h5>
+                        {{therapist.desc}}<br><br>
+                        <a class="btn btn-primary" id="send_request" href="/send_user_request/{{therapist.id}}">Send Requet</a>
+                    </div>
+                </div> -->
+            {% endfor %}
+    
+            </div>
     </div>
 </body>
 </html>

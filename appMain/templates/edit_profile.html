@@ -127,8 +127,10 @@
                 <li><a href="/dashboard_page">Your Profile</a></li>
                 <li><a href="/members_page">Members</a></li>
                 <li><a href="/requests_page">Requests</a></li>
+                <li><a href="/products_page_admin">Products</a></li>
                 <li><a href="/add_member_page">Add member</a></li>
                 <li><a href="/add_request_page">Add Request</a></li>
+                <li><a href="/add_product_page">Add Product</a></li>
                 <li><a href="/messages_page/{{admin.id}}">Messages</a></li>
                 <li><a href="/send_message_page">Send Message</a></li>
                 <li><a href="/logout">Logout</a></li>
@@ -162,7 +164,7 @@
             <div class="profile">
                     Edit Profile
                     <hr>
-                    <form action="/edit_method_by_admin/{{user.id}}" method="post">
+                    <form action="/edit_method_by_admin/{{user.id}}" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         <fieldset>
                             <div class="form-group">

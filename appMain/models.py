@@ -128,8 +128,8 @@ class User(models.Model):
     treatment_field = models.TextField(default=None)
     years_of_experience = models.CharField(max_length=255,default='')
     desc = models.TextField(default=None)
-    certificate = models.FileField(upload_to="certificates/", max_length=250,null=True,blank=True,default='')
-    photograph = models.FileField(upload_to="doctors_image/", max_length=250,null=True,blank=True,default='')
+    certificate = models.ImageField(upload_to="certificates/", max_length=250,null=True,blank=True,default='')
+    photograph = models.ImageField(upload_to="doctors_image/", max_length=250,null=True,blank=True,default='')
     password = models.CharField(max_length=255)
     user_level = models.CharField(max_length = 255, default='proccser')
     address = models.CharField(max_length=255,default='')
@@ -165,7 +165,7 @@ class Message(models.Model):
 
 class Products(models.Model):
     product_name = models.TextField()
-    product_image = models.FileField(upload_to="products_image/", max_length=250,null=True,blank=True,default='')
+    product_image = models.ImageField(upload_to="products_image/", max_length=250,null=True,blank=True,default='')
     product_number = models.TextField()
     product_desc = models.TextField()
     product_price = models.TextField()
@@ -184,20 +184,20 @@ def add_product_data(data , files):
 
 
 # register new user
-def Register(request):
-    first_name = request.POST['first_name']
-    last_name = request.POST['last_name']
-    email = request.POST['email']
-    password = request.POST['password']
-    identity_number = request.POST['identity_number']
-    treatment_field = request.POST['treatment_field']
-    years_of_experience = request.POST['years_of_experience']
-    desc = request.POST['desc']
-    certificate = request.POST['certificate']
-    photograph = request.POST['photograph']
-    user_level = request.POST['user_level']
+def Register(data , files):
+    first_name = data['first_name']
+    last_name = data['last_name']
+    email = data['email']
+    password = data['password']
+    identity_number = data['identity_number']
+    treatment_field = data['treatment_field']
+    years_of_experience = data['years_of_experience']
+    desc = data['desc']
+    certificate = files['certificate']
+    photograph = files['photograph']
+    user_level = data['user_level']
     pw_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode() 
-    if (request.POST['confirm_password'] == password):
+    if (data['confirm_password'] == password):
         user =  User.objects.create(first_name = first_name , last_name = last_name, email = email , password = pw_hash, number=identity_number ,treatment_field=treatment_field,years_of_experience=years_of_experience,desc=desc,certificate=certificate,photograph=photograph,user_level=user_level,address='office')
 
     current_user = User.objects.get(id = user.id)
@@ -235,9 +235,22 @@ def edit_by_admin(id,first_name,last_name,email,number,treatment_field,years_of_
     print("333")
     return user.save()
 
+# edit product data
+def edit_product_by_admin(id,product_name,product_number,product_price,product_desc):
+    product = Products.objects.get(id=id)
+    product.product_name = product_name
+    product.product_number = product_number
+    product.product_price = product_price
+    product.product_desc = product_desc
+    return product.save()
+
 # get all users
 def get_all_user(request):
     return User.objects.all()
+
+# get all products
+def get_all_products(request):
+    return Products.objects.all()
 
 # edit login info
 def edit_Login_data(id,email,password,confirm_password):
@@ -281,6 +294,10 @@ def send_message(message_context,send_from,send_to):
 # delete message
 def del_message(message):
     return message.delete()
+
+# delete product
+def del_product(product):
+    return product.delete()
 
 def get_therapists(request):
     return User.objects.filter(user_level = "process")
