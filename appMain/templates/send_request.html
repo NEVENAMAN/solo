@@ -47,7 +47,7 @@
                 <input type="submit" value="Sign in" class="btn btn-primary">
             </form>
         </div><br>
-        <form action="/send_visitor_request" method="post">
+        <form action="/send_visitor_request" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <fieldset>
                 <div class="form-group">
@@ -134,9 +134,9 @@
                 <div class="form-group">
                     <label for="disabledTextInput">Therapist</label>
                     <select name="therapist" class="form-control">
-                        <option>{{therapist.treatment_field}}</option>
+                        <option>{{therapist.email}}</option>
                         {% for therapist in therapists %}
-                            <option>{{therapist.treatment_field}}</option>
+                            <option>{{therapist.email}}</option>
                         {% endfor %}
                     </select>
                 </div>

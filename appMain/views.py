@@ -144,7 +144,7 @@ def send_visitor_request(request):
         street = request.POST['street']
         service_desc = request.POST['service_desc']
         therapist_Select = request.POST['therapist']
-        therapist = User.objects.filter(treatment_field = therapist_Select)
+        therapist = User.objects.filter(email = therapist_Select)
         add_request_to_therapist(full_name,age,identity_number,phone_number,telphone_number,email,state,street,service_desc,therapist[0])
         return redirect('/welcome_page')
 
@@ -214,7 +214,7 @@ def edit_product_method(request,id):
     product_desc = request.POST['product_desc']
     # product_img = request.FILES['product_img']
     edit_product_by_admin(id,product_name,product_number,product_price,product_desc)
-    return redirect('/products_page')
+    return redirect('/products_page_admin')
 
 # edit by admin method
 def edit_method_by_admin(request,id):
@@ -405,7 +405,7 @@ def send_message_method(request):
         print(sender[0].first_name)
         message_context = request.POST['message_context']
         send_from = sender[0]
-        reciver = User.objects.filter(first_name = request.POST['send_to'])
+        reciver = User.objects.filter(email = request.POST['send_to'])
         send_to = reciver[0]
         send_message(message_context,send_from,send_to)
         if send_from.user_level == "admin":
@@ -497,11 +497,11 @@ def del_therapist_request(request,id):
 
 # view request data
 def view_request(request,id):
-    therapist = User.objects.get(id=id)
+    # therapist = User.objects.get(id=id)
     requeste = get_request(id)
     print(requeste.full_name)
     context = {
-        "therapist" : therapist,
+        # "therapist" : therapist,
         "request" :requeste,
     }
     return render(request,'view_request.html',context)

@@ -42,7 +42,7 @@
         </ul><br><br>
         <div class="top_users">
             <h3>Add Member</h3>
-            <form action="/login_page" method="post">
+            <form action="/login_page" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <input type="submit" value="Sign in" class="btn btn-primary">
             </form>

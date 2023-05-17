@@ -174,7 +174,7 @@
             <div class="profile">
                 Edit Member Profile
                 <hr>
-                <form action="/edit_method_by_admin/{{member.id}}" method="post">
+                <form action="/edit_method_by_admin/{{member.id}}" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <fieldset>
                         <div class="form-group">

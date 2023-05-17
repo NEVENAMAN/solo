@@ -153,7 +153,7 @@
             <div class="profile">
                 Send Message 
                 <hr>
-                <form action="/send_message_method" method="post">
+                <form action="/send_message_method" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <fieldset>
                         <div class="form-group">
@@ -178,7 +178,7 @@
                             <label for="disabledTextInput">Send to : </label>
                             <select name="send_to">
                                 {% for user in users %}
-                                    <option>{{user.first_name}}</option>
+                                    <option>{{user.email}}</option>
                                 {% endfor %}
                             </select>
                         </div>
